@@ -1,0 +1,26 @@
+CREATE TABLE result_enum (
+    id INTEGER PRIMARY KEY,
+    enumResult TEXT NOT NULL UNIQUE, /* 枚举结果 */
+    frontLastSelectId INTEGER DEFAULT 0, /* 前三最后一次中奖期数Id */
+    frontSelectCount INTERGER DEFAULT 0, /* 前三最后连续中奖期数次数 */
+    frontMaxNotSelectCount INTEGER DEFAULT 0, /* 前三最大未中奖期数次数 */
+    frontMaxSelectCount INTEGER DEFAULT 0, /* 前三最大中奖期数次数 */
+    backLastSelectId INTEGER DEFAULT 0, /* 后三最后一次中奖期数Id */
+    backSelectCount INTERGER DEFAULT 0, /* 后三最后连续中奖期数次数 */
+    backMaxNotSelectCount INTEGER DEFAULT 0, /* 后三最大未中奖期数次数 */
+    backMaxSelectCount INTEGER DEFAULT 0 /* 后三最大中奖期数次数 */
+);
+
+
+CREATE INDEX idx_enum_result on result_enum (enumResult);
+
+
+CREATE TABLE result (
+    id INTEGER PRIMARY KEY,
+    result TEXT NOT NULL, /* 开奖结果 */
+    dateTime TEXT NOT NULL, /* 开奖时间 */
+    sequence TEXT NOT NULL UNIQUE /* 开奖期数 */
+);
+
+CREATE INDEX idx_result on result (result);
+CREATE INDEX idx_sequence on result (sequence);

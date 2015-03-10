@@ -1,0 +1,22 @@
+SINGLEAPPLICATIONSRCPATH = $${PWD}/../src/qtsingleapplication/src
+
+!cross_compile{
+    PROJECT_LIBDIR = $${PWD}/../x86/lib
+}else{
+    PROJECT_LIBDIR = $${PWD}/../arm/lib
+}
+
+TEMPLATE += fakelib
+LIBSINGLEAPPLICATION_NAME = $$qtLibraryTarget(SingleApplication)
+TEMPLATE -= fakelib
+
+INCLUDEPATH += $$SINGLEAPPLICATIONSRCPATH
+DEPENDPATH += $$SINGLEAPPLICATIONSRCPATH
+
+!singleapplication-buildlib{
+    DEFINES += SINGLECOREAPPLICATION_IMPORTS
+    LIBS +=  -L$$PROJECT_LIBDIR  -l$$LIBSINGLEAPPLICATION_NAME
+}else{
+    DEFINES += SINGLECOREAPPLICATION_EXPORTS
+    include($$SINGLEAPPLICATIONSRCPATH/qtsingleapplication.pri)
+}
